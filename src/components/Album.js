@@ -9,14 +9,19 @@ class Album extends Component {
        return album.slug === this.props.match.params.slug
      });
 
+
      this.state = {
        album: album,
        currentSong : album.songs[0],
-       isPlaying: false
+       isPlaying: false,
+       displayPlay: '',
+       displayPause: ''
+
      };
 
      this.audioElement = document.createElement('audio');
      this.audioElement.src = album.songs[0].audioSrc;
+
    }
 
    play(){
@@ -27,23 +32,53 @@ class Album extends Component {
    pause(){
      this.audioElement.pause();
      this.setState({isPlaying: false});
+
    }
 
-   setSong(song){
+   setSong(song, index){
      this.audioElement.src = song.audioSrc;
-     this.setState({currentSong: song})
+     this.setState({currentSong: song});
+
    }
-   handleSongClick(song){
+
+   handleSongClick(song, index){
      const isSameSong = this.state.currentSong === song;
      if(this.state.isPlaying && isSameSong){
        this.pause();
+       this.setState({displayPlay: index});
+       this.setState({displayPause: ''});
      }else
        {
          if(!isSameSong){this.setSong(song); }
          this.play();
+         this.setState({displayPause: index});
+         this.setState({displayPlay: ''});
        }
-
    }
+
+
+   handleMouseEnter = (song, index) => {
+      const isSameSong = this.state.currentSong === song;
+      if(!isSameSong){
+          this.setState({displayPlay: index});
+        }
+      else if(isSameSong && !this.state.isPlaying){
+        this.setState({displayPlay: index});
+        this.setState({displayPause: ''});
+      }
+    }
+
+
+   handleMouseLeave = (song, index) => {
+     const isSameSong = this.state.currentSong === song;
+     if(isSameSong && !this.state.isPlaying){
+       this.setState({displayPlay: index})
+     }
+     this.setState({displayPlay: ''})
+    }
+
+
+
   render(){
     return(
       <section className="album">
@@ -65,12 +100,23 @@ class Album extends Component {
             <tbody>
               {
                 this.state.album.songs.map((song,index) =>
-                    <tr key={index} onClick={() => this.handleSongClick(song)}>
-                      <td>{index + 1}:</td>
-                      <td>{song.title}</td>
-                      <td>{song.duration} seconds</td>
-                    </tr>
+                    <tr key={index}
+                      onClick={() => this.handleSongClick(song, index)}
+                      onMouseEnter={() => this.handleMouseEnter(song, index)}
+                      onMouseLeave={() => this.handleMouseLeave(song,index)}
+                      >
 
+                      <span
+                        className={this.state.currentSong === song && !this.state.isPlaying || this.state.displayPlay === index ? "ion-md-play" : "none"}>
+                      </span>
+                      <span
+                        className={this.state.displayPause === index ? "ion-md-pause" : "none"}>
+                      </span>
+                      <td style ={{display: this.state.displayPlay === index || this.state.displayPause === index ? `none` : '' }}>{index + 1}</td>
+
+                      <td className ="">{song.title}</td>
+                      <td className ="">{song.duration} seconds</td>
+                    </tr>
               )}
             </tbody>
         </table>
