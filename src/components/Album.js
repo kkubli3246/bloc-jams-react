@@ -112,7 +112,7 @@ class Album extends Component {
                       <span
                         className={this.state.displayPause === index ? "ion-md-pause" : "none"}>
                       </span>
-                      <td style ={{display: this.state.displayPlay === index || this.state.displayPause === index ? `none` : '' }}>{index + 1}</td>
+                      <td style ={{display: this.state.currentSong === song || this.state.displayPlay === index || this.state.displayPause === index ? `none` : '' }}>{index + 1}</td>
 
                       <td className ="">{song.title}</td>
                       <td className ="">{song.duration} seconds</td>
