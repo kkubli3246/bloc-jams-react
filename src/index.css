@@ -12,7 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+span{
+  padding-right: 10px;
+}
 
-tbody {
-  text-align: center;
+#disappear{
+  color: white;
 }

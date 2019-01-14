@@ -15,7 +15,7 @@ class Album extends Component {
        currentSong : album.songs[0],
        isPlaying: false,
        displayPlay: '',
-       displayPause: ''
+       displayPause: '',
 
      };
 
@@ -59,13 +59,15 @@ class Album extends Component {
 
    handleMouseEnter = (song, index) => {
       const isSameSong = this.state.currentSong === song;
+
       if(!isSameSong){
           this.setState({displayPlay: index});
         }
-      else if(isSameSong && !this.state.isPlaying){
-        this.setState({displayPlay: index});
-        this.setState({displayPause: ''});
-      }
+        else if(isSameSong && !this.state.isPlaying){
+          this.setState({displayPlay: index});
+          this.setState({displayPause: ''});
+        }
+
     }
 
 
@@ -106,13 +108,13 @@ class Album extends Component {
                       onMouseLeave={() => this.handleMouseLeave(song,index)}
                       >
 
-                      <span
-                        className={this.state.currentSong === song && !this.state.isPlaying || this.state.displayPlay === index ? "ion-md-play" : "none"}>
-                      </span>
-                      <span
-                        className={this.state.displayPause === index ? "ion-md-pause" : "none"}>
-                      </span>
-                      <td style ={{display: this.state.currentSong === song || this.state.displayPlay === index || this.state.displayPause === index ? `none` : '' }}>{index + 1}</td>
+                      <td className="disappear">
+                        <span className={this.state.displayPlay === index ? "ion-md-play" : "none"}>
+                          <span className={this.state.displayPause === index ? "ion-md-pause" : "none"}>
+                            {this.state.displayPlay === index || this.state.displayPause === index ? "" : index + 1 + '.'}
+                          </span>
+                        </span>
+                      </td>
 
                       <td className ="">{song.title}</td>
                       <td className ="">{song.duration} seconds</td>
@@ -125,10 +127,10 @@ class Album extends Component {
   }
 
 }
-
+//
 export default Album;
 
 
 /*
-
+id = {this.state.displayPlay === index || this.state.displayPause === index ? `disappear` : '' }
 */
