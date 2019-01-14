@@ -59,24 +59,18 @@ class Album extends Component {
 
    handleMouseEnter = (song, index) => {
       const isSameSong = this.state.currentSong === song;
-
-      if(!isSameSong){
-          this.setState({displayPlay: index});
-        }
-        else if(isSameSong && !this.state.isPlaying){
-          this.setState({displayPlay: index});
-          this.setState({displayPause: ''});
-        }
-
+      this.setState({displayPlay: index});
+      if(this.state.displayPause === index){
+        this.setState({displayPause: ""});
+      }
     }
-
 
    handleMouseLeave = (song, index) => {
      const isSameSong = this.state.currentSong === song;
-     if(isSameSong && !this.state.isPlaying){
-       this.setState({displayPlay: index})
+     if(isSameSong && this.state.isPlaying){
+       this.setState({displayPause: index});
      }
-     this.setState({displayPlay: ''})
+     this.setState({displayPlay: ""});
     }
 
 
@@ -109,7 +103,7 @@ class Album extends Component {
                       >
 
                       <td className="disappear">
-                        <span className={this.state.displayPlay === index ? "ion-md-play" : "none"}>
+                        <span className={this.state.displayPlay === index ? "ion-md-play" : ""}>
                           <span className={this.state.displayPause === index ? "ion-md-pause" : "none"}>
                             {this.state.displayPlay === index || this.state.displayPause === index ? "" : index + 1 + '.'}
                           </span>
