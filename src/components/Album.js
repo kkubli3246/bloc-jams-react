@@ -28,7 +28,7 @@ class Album extends Component {
    play(){
      this.audioElement.play();
      this.setState({isPlaying: true});
-
+    
    }
 
    pause(){
@@ -46,13 +46,13 @@ class Album extends Component {
    handleSongClick(song, index){
      const isSameSong = this.state.currentSong === song;
      if(this.state.isPlaying && isSameSong){
-       this.pause();
+       this.pause(index);
        this.setState({displayPlay: index});
        this.setState({displayPause: ''});
      }else
        {
          if(!isSameSong){this.setSong(song); }
-         this.play();
+         this.play(index);
          this.setState({displayPause: index});
          this.setState({displayPlay: ''});
        }
@@ -68,7 +68,7 @@ class Album extends Component {
 
    handleNextClick(){
      const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-     const newIndex = Math.max(0, currentIndex + 1);
+     const newIndex = Math.min(this.state.album.songs.length - 1, currentIndex + 1);
      const newSong = this.state.album.songs[newIndex];
      this.setSong(newSong);
      this.play();
