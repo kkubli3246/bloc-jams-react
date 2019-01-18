@@ -17,8 +17,12 @@ class Album extends Component {
        isPlaying: false,
        displayPlay: '',
        displayPause: '',
+
        duration: album.songs[0].duration,
-       currentTime: 0
+       currentTime: 0,
+
+       volume: album.songs[0].volume,
+       currentVolume: .8
 
      };
 
@@ -34,16 +38,21 @@ class Album extends Component {
       },
       durationchange: e => {
         this.setState({ duration: this.audioElement.duration });
+      },
+      volumechange: e => {
+        this.setState({volume: this.audioElement.volume});
       }
     };
     this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
     this.audioElement.addEventListener('durationchange', this.eventListeners.durationchange);
+    this.audioElement.addEventListener('volumechange', this.eventListeners.volumechange);
   }
 
   componentWillUnmount() {
    this.audioElement.src = null;
    this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
    this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
+   this.audioElement.removeEventListener('volumechange', this.eventListeners.volumechange);
  }
 
    play(){
@@ -100,6 +109,20 @@ class Album extends Component {
      const newTime = this.audioElement.duration * e.target.value;
      this.audioElement.currentTime = newTime;
      this.setState({ currentTime: newTime });
+
+   }
+
+   handleVolumeChange = (e) => {
+     const newVol = e.target.value;
+     this.audioElement.volume = newVol;
+     this.setState({volume: newVol});
+   }
+
+   formatTime = (time) => {
+     const mins = Math.floor(time / 60);
+     let sec = Math.floor(time % 60);
+     if(sec < 10){sec = "0" + sec;}
+      return mins + ":" + sec;
    }
 
    handleMouseEnter = (index) => {
@@ -162,12 +185,20 @@ class Album extends Component {
         <PlayerBar
           isPlaying ={this.state.isPlaying}
           currentSong={this.state.currentSong}
+
           duration ={this.audioElement.duration}
           currentTime = {this.audioElement.currentTime}
+
+          currentVolume={this.audioElement.currentVolume}
+          volume={this.audioElement.volume}
+
+          formatTime={this.formatTime}
+
           handleSongClick ={() => this.handleSongClick(this.state.currentSong)}
           handlePrevClick ={() => this.handlePrevClick()}
           handleNextClick ={() => this.handleNextClick()}
           handleTimeChange ={(e) => this.handleTimeChange(e)}
+          handleVolumeChange={(e) => this.handleVolumeChange(e)}
         />
       </section>
  );
