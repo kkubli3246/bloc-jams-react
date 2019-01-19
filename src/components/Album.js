@@ -177,7 +177,7 @@ class Album extends Component {
                       </td>
 
                       <td className ="">{song.title}</td>
-                      <td className ="">{song.duration} seconds</td>
+                      <td className ="">{this.formatTime(song.duration)}</td>
                     </tr>
               )}
             </tbody>
@@ -203,12 +203,8 @@ class Album extends Component {
       </section>
  );
   }
-
 }
-//
 export default Album;
 
 
-/*
-id = {this.state.displayPlay === index || this.state.displayPause === index ? `disappear` : '' }
-*/
+
