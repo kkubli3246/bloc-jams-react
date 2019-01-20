@@ -122,8 +122,7 @@ class Album extends Component {
      const mins = Math.floor(time / 60);
      let sec = Math.floor(time % 60);
      if(sec < 10){sec = "0" + sec;}
-      return mins + ":" + sec;
-   }
+      return mins + ":" + sec;}
 
    handleMouseEnter = (index) => {
       this.setState({displayPlay: index});
@@ -131,16 +130,19 @@ class Album extends Component {
       }
     }
 
+
    handleMouseLeave = (song, index) => {
      const isSameSong = this.state.currentSong === song;
      if(isSameSong && this.state.isPlaying){
        this.setState({displayPause: index});
      }
      this.setState({displayPlay: ""});
+
     }
 
 
 
+  
   render(){
     return(
       <section className="album">
@@ -153,7 +155,12 @@ class Album extends Component {
               <div id="release-info">{this.state.album.releaseInfo}</div>
             </div>
         </section>
-        <table id="song-list">
+        <div className = "container">
+          <div className ="row">
+            
+
+            
+        <table className = "steelBlueCols" id="song-list col-2">
             <colgroup>
                 <col id="song-number-column" />
                 <col id="song-title-column" />
@@ -182,6 +189,8 @@ class Album extends Component {
               )}
             </tbody>
         </table>
+         <div className="col-2"></div>
+        <div className="playerbar col-3">
         <PlayerBar
           isPlaying ={this.state.isPlaying}
           currentSong={this.state.currentSong}
@@ -200,6 +209,9 @@ class Album extends Component {
           handleTimeChange ={(e) => this.handleTimeChange(e)}
           handleVolumeChange={(e) => this.handleVolumeChange(e)}
         />
+        </div>
+        </div>
+        </div>
       </section>
  );
   }

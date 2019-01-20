@@ -6,19 +6,19 @@ class PlayerBar extends Component {
 
     return(
       <section className="player-bar">
-      <section id="buttons">
-        <button id="previous" onClick= {this.props.handlePrevClick}>
+      <section className = "btn-group" role ="group" id="buttons">
+        <button className ="btn btn-secondary" id="previous" onClick= {this.props.handlePrevClick}>
           <span className="ion-md-skip-backward"></span>
         </button>
-        <button id="play-pause" onClick = {this.props.handleSongClick}>
+        <button className = "btn btn-primary"id="play-pause" onClick = {this.props.handleSongClick}>
           <span className={this.props.isPlaying ? 'ion-md-pause' : 'ion-md-play'}></span>
         </button>
-        <button id="next" onClick={this.props.handleNextClick}>
+        <button className ="btn btn-secondary"id="next" onClick={this.props.handleNextClick}>
           <span className="ion-md-skip-forward"></span>
         </button>
       </section>
       <section id="time-control">
-        <div className="current-time">{this.props.formatTime(this.props.currentTime)}</div>
+        
         <input
           type="range"
           className="seek-bar"
@@ -28,7 +28,11 @@ class PlayerBar extends Component {
           step="0.01"
           onChange = {this.props.handleTimeChange}
         />
-        <div className="total-time">{this.props.formatTime(this.props.duration)}</div>
+        <div 
+          className="current-time">
+          {this.props.formatTime(this.props.currentTime)}/{this.props.formatTime(this.props.duration)}
+        </div>
+        
       </section>
 
 
