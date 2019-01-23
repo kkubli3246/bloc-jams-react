@@ -14,13 +14,13 @@ class Library extends Component {
       <section className='library'>
         {
           this.state.albums.map((album,index) =>
-            <div key={index}>
+            <div className ="animated bounceInRight" key={index}>
             <Link to={`/album/${album.slug}`} key={index}>
-              <img src={album.albumCover} alt={album.title} />
-              <div>{album.title}</div>
-              <div>{album.artist}</div>
-              <div>{album.releaseInfo}</div>
-              <div>{album.songs.length} songs</div>
+              <img className = "img-fluid" src={album.albumCover} alt={album.title} />
+              <div className ="animated tada infinite slow delay-2s">{album.title}</div>
+              <div className ="animated tada infinite slow delay-2s">{album.artist}</div>
+              <div className ="animated tada infinite slow delay-2s">{album.releaseInfo}</div>
+              <div className ="animated tada infinite slow delay-2s">{album.songs.length} songs</div>
             </Link>
             </div>
           )
